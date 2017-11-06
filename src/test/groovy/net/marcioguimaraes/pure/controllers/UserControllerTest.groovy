@@ -58,6 +58,14 @@ class UserControllerTest {
     }
 
     @Test
+    void getUserInCache() throws Exception {
+        mockMvc.perform(get('/users/1'))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath('$.id', is(1)))
+    }
+
+    @Test
     void saveUser() {
         mockMvc.perform(post('/users')
                 .content('''

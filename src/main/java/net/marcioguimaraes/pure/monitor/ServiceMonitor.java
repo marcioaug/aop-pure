@@ -18,9 +18,4 @@ public class ServiceMonitor {
     }
     // PV:ENDCOND
 
-    @Before("call()")
-    public void bla(JoinPoint joinPoint) {
-
-    }
-
 }

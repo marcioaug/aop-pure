@@ -45,6 +45,7 @@ class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
                 .andExpect(jsonPath('$.name', is("Marcio Augusto")))
+                .andExpect(jsonPath('$.id', is(1)))
     }
 
 }

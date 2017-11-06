@@ -7,6 +7,7 @@ import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
+import org.springframework.mock.http.MockHttpOutputMessage
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.context.web.WebAppConfiguration
 import org.springframework.test.web.servlet.MockMvc
@@ -41,11 +42,35 @@ class UserControllerTest {
 
     @Test
     void userGreeting() throws Exception {
-        mockMvc.perform(get('/users/greeting'))
+        mockMvc.perform(get('/users/greeting').contentType(contentType))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
                 .andExpect(jsonPath('$.name', is("Marcio Augusto")))
+                .andExpect(jsonPath('$.id', notNullValue()))
+    }
+
+    @Test
+    void getUser() throws Exception {
+        mockMvc.perform(get('/users/1'))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
                 .andExpect(jsonPath('$.id', is(1)))
+    }
+
+    @Test
+    void saveUser() {
+        mockMvc.perform(post('/users')
+                .content('''
+                    {
+                        "name": "Fulano de Tal",
+                        "username": "fulano"
+                    }
+                ''')
+                .contentType(contentType))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath('$.name', is("Fulano de Tal")))
+                .andExpect(jsonPath('$.id', notNullValue()))
     }
 
 }

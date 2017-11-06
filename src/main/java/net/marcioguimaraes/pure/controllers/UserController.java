@@ -3,6 +3,7 @@ package net.marcioguimaraes.pure.controllers;
 import net.marcioguimaraes.pure.models.User;
 import net.marcioguimaraes.pure.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,9 +23,9 @@ public class UserController {
         return userRepository.save(user);
     }
 
-    @RequestMapping(value="/{id}", method = RequestMethod.GET)
-    public User get(@PathVariable Long id) {
-        return userRepository.findOne(id);
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public User get(@PathVariable("id") Long userId) {
+        return userRepository.findOne(userId);
     }
 }
 
